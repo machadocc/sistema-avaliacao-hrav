@@ -1,0 +1,26 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+    {
+    "name": "Listem for XDebug",
+    "type": "php",
+    "request":"launch",
+    "port":9000
+    },
+    {
+    "name": "Launch corrently open script",
+    "type": "php",
+    "request": "launch",
+    "program": "${fileDirname}\\${fileBasename}",
+    "cwd": "${fileDirname}",
+    "port": 9000
+    },
+    {
+    "type": "chrome",
+    "request": "launch",
+    "name": "Abrir o chrome rodando a aplicação",
+    "url": "http://localhost/${fileBasename}?XDEBUG_SESSION_START=",
+    "webRoot": "${workspaceFolder}"
+    }
+    ]
+ }
