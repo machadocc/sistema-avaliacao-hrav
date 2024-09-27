@@ -19,7 +19,7 @@
     "type": "chrome",
     "request": "launch",
     "name": "Abrir o chrome rodando a aplicação",
-    "url": "http://localhost/${fileBasename}?XDEBUG_SESSION_START=",
+    "url": "http://localhost/sistema-avaliacao-hrav-1/src/${fileBasename}?XDEBUG_SESSION_START=",
     "webRoot": "${workspaceFolder}"
     }
     ]

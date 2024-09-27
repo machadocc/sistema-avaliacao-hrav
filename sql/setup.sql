@@ -1,3 +1,9 @@
+-- Criar tabela de setores
+CREATE TABLE setores (
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL
+);
+
 -- Criar tabela de dispositivos
 CREATE TABLE dispositivos (
     id SERIAL PRIMARY KEY,
@@ -15,12 +21,12 @@ CREATE TABLE perguntas (
 -- Criar tabela de avaliações
 CREATE TABLE avaliacoes (
     id SERIAL PRIMARY KEY,
-    id_setor INT REFERENCES setores(id),
-    id_pergunta INT REFERENCES perguntas(id),
-    id_dispositivo INT REFERENCES dispositivos(id),
-    resposta INT CHECK (resposta >= 0 AND resposta <= 10),
+    id_setor INT REFERENCES setores(id) ON DELETE CASCADE,
+    id_pergunta INT REFERENCES perguntas(id) ON DELETE CASCADE,
+    id_dispositivo INT REFERENCES dispositivos(id) ON DELETE CASCADE,
+    resposta INT CHECK (resposta >= 0 AND resposta <= 10) NOT NULL,
     feedback TEXT,
-    data_hora TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    data_hora TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
 -- Criar tabela de usuários administrativos
