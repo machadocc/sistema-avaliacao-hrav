@@ -1,42 +1,48 @@
 <?php
-require_once 'db.php';
+require_once 'db.php'; // Assegure-se de que está chamando o arquivo db.php
 
-function listarPerguntas() {
-    $conn = conectarDB();
-    $query = "SELECT * FROM perguntas WHERE ativo = true ORDER BY id"; // Alterado para 'ativo'
-    $result = pg_query($conn, $query);
-    $perguntas = pg_fetch_all($result);
-    pg_close($conn); // Fecha a conexão
-    return $perguntas;
+function getPerguntas($limit, $offset) {
+    global $pdo;
+    $stmt = $pdo->prepare("SELECT p.*, s.nome as setor_nome FROM perguntas p JOIN setores s ON p.setor_id = s.id LIMIT :limit OFFSET :offset");
+    $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
+    $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
-function adicionarPergunta($texto, $ativo) {
-    $conn = conectarDB();
-    $query = 'INSERT INTO perguntas (texto, ativo) VALUES ($1, $2)';
-    $result = pg_query_params($conn, $query, array($texto, $ativo));
-
-    if ($result) {
-        pg_close($conn); // Fecha a conexão
-        return true;
-    } else {
-        pg_close($conn); // Fecha a conexão
-        return false;
-    }
+function adicionarPergunta($pergunta, $setor_id) {
+    $conn = dbConnect();
+    $sql = "INSERT INTO perguntas (pergunta, setor_id) VALUES (:pergunta, :setor_id)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bindParam(':pergunta', $pergunta);
+    $stmt->bindParam(':setor_id', $setor_id);
+    $stmt->execute();
 }
 
-function editarPergunta($id, $novoTexto, $ativo) { // Adicionando a flag 'ativo'
-    $conn = conectarDB(); 
-    $query = "UPDATE perguntas SET texto = $1, ativo = $2 WHERE id = $3"; // Adicionando a atualização do 'ativo'
-    $result = pg_query_params($conn, $query, array($novoTexto, $ativo, $id));
-    pg_close($conn); // Fecha a conexão
-    return $result !== false; // Retorna verdadeiro ou falso
+function editarPergunta($id, $nova_pergunta, $setor_id, $feedback_required) {
+    $conn = dbConnect();
+    $sql = "UPDATE perguntas SET pergunta = :nova_pergunta, setor_id = :setor_id, feedback_required = :feedback_required WHERE id = :id";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute([':nova_pergunta' => $nova_pergunta, ':setor_id' => $setor_id, ':feedback_required' => $feedback_required, ':id' => $id]);
 }
 
-function removerPergunta($id) {
-    $conn = conectarDB(); 
-    $query = "UPDATE perguntas SET ativo = false WHERE id = $1"; // Atualiza 'ativo' para false
-    $result = pg_query_params($conn, $query, array($id));
-    pg_close($conn); // Fecha a conexão
-    return $result !== false; // Retorna verdadeiro ou falso
+function buscarPerguntaPorId($id) {
+    $conn = dbConnect();
+    $sql = "SELECT * FROM perguntas WHERE id = :id";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute([':id' => $id]);
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+
+function excluirPergunta($id) {
+    global $pdo;
+
+    // Excluir respostas associadas a esta pergunta
+    $stmt = $pdo->prepare("DELETE FROM respostas WHERE pergunta_id = :pergunta_id");
+    $stmt->execute(['pergunta_id' => $id]);
+
+    // Agora, excluir a pergunta
+    $stmt = $pdo->prepare("DELETE FROM perguntas WHERE id = :id");
+    $stmt->execute(['id' => $id]);
 }
 ?>

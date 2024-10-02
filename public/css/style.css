@@ -1,0 +1,242 @@
+/* Reset básico */
+
+:root {
+    --corbase: #031b4e;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    min-height: 100vh; /* Faz o corpo ocupar pelo menos a altura total da tela */
+}
+
+h1, h2, h3 {
+    text-align: center;
+    margin: 20px 0;
+}
+
+nav {
+    background-color: var(--corbase);
+    padding: 10px 0;
+}
+
+nav ul {
+    text-align: center;
+    list-style-type: none;
+}
+
+nav ul li {
+    display: inline;
+    margin: 0 15px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.container {
+    width: 100%; /* Faz o container ocupar a largura total */
+    max-width: none; /* Remove a restrição de largura máxima */
+    margin: 0; /* Remove margens para ocupar todo o espaço */
+    padding: 20px;
+    background-color: #f4f4f4;
+    border-radius: 0; /* Remove bordas arredondadas */
+    box-shadow: none; /* Remove a sombra para um layout mais limpo */
+}
+
+/* Estilos para seções */
+section {
+    margin: 20px 0; /* Espaçamento entre as seções */
+    padding: 20px; /* Espaçamento interno */
+    background-color: #ffffff; /* Fundo branco para cada seção */
+    border-radius: 8px; /* Bordas arredondadas */
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1); /* Sombra leve para cada seção */
+}
+
+h2, h3 {
+    color: var(--corbase);
+}
+
+.form-buttons {
+    display: flex;
+    justify-content: flex-end; /* Alinha os botões à direita */
+    margin-top: 10px; /* Espaçamento superior para os botões */
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+input[type="text"], select {
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+input[type="text"]:focus, select:focus {
+    border-color: var(--corbase);
+    outline: none; /* Remove outline padrão */
+    box-shadow: 0 0 5px rgba(3, 27, 78, 0.5); /* Adiciona sombra ao foco */
+}
+
+button {
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: var(--corbase);
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s, box-shadow 0.3s; /* Transições suavizadas */
+}
+
+button:hover {
+    background-color: #0056b3;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Efeito de sombra ao passar o mouse */
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-conteudo {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 500px;
+    border-radius: 8px;
+}
+
+.fechar {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.fechar:hover,
+.fechar:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.botao-excluir {
+    background-color: #dc3545;
+}
+
+.botao-excluir:hover {
+    background-color: #c82333;
+}
+
+/* Adicionando responsividade */
+@media (max-width: 768px) {
+    nav ul li {
+        display: block;
+        margin: 10px 0;
+    }
+
+    .container {
+        padding: 10px; /* Reduz padding em telas menores */
+    }
+
+    input[type="text"], select {
+        width: 100%; /* Faz os campos ocuparem a largura total */
+    }
+
+    button {
+        width: 100%; /* Faz os botões ocuparem a largura total */
+    }
+}
+
+.tabela-avaliacoes {
+    width: 100%; /* Faz a tabela ocupar a largura total */
+    border-collapse: collapse; /* Remove o espaço entre as bordas */
+    margin-top: 20px; /* Espaçamento superior para a tabela */
+}
+
+.tabela-avaliacoes th, 
+.tabela-avaliacoes td {
+    padding: 12px; /* Espaçamento interno das células */
+    text-align: left; /* Alinhamento do texto à esquerda */
+    border-bottom: 1px solid #ddd; /* Borda inferior das células */
+}
+
+.tabela-avaliacoes th {
+    background-color: var(--corbase); /* Cor de fundo para o cabeçalho */
+    color: white; /* Cor do texto do cabeçalho */
+}
+
+.tabela-avaliacoes tr:hover {
+    background-color: #f1f1f1; /* Cor de fundo ao passar o mouse */
+}
+
+@media (max-width: 768px) {
+    .tabela-avaliacoes th, 
+    .tabela-avaliacoes td {
+        padding: 8px; /* Reduz o padding em telas menores */
+    }
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.pagination a {
+    margin: 0 5px;
+    padding: 8px 12px;
+    text-decoration: none;
+    color: var(--corbase);
+    border: 1px solid var(--corbase);
+    border-radius: 4px;
+}
+
+.pagination a.active {
+    background-color: var(--corbase);
+    color: white;
+}
+
+.pagination a:hover {
+    background-color: #0056b3;
+    color: white;
+}
+
+ol, ul {
+    list-style: none;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+.lista-de-informacoes {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}

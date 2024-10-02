@@ -1,11 +1,20 @@
 <?php
-require_once '../config.php';
+function dbConnect() {
+    $host = 'localhost'; // Altere conforme necessário
+    $dbname = 'sistemaavaliacao'; // Altere para o nome do seu banco de dados
+    $user = 'postgres'; // Altere para o usuário do seu banco de dados
+    $password = 'root'; // Altere para a senha do seu banco de dados
 
-function conectarDB() {
-    $conn = pg_connect("host=".DB_HOST." dbname=".DB_NAME." user=".DB_USER." password=".DB_PASS);
-    if (!$conn) {
-        die("Erro na conexão: " . pg_last_error());
+    // String de conexão correta
+    $dsn = "pgsql:host=$host;dbname=$dbname"; 
+
+    try {
+        $pdo = new PDO($dsn, $user, $password);
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        return $pdo; // Retorna a conexão
+    } catch (PDOException $e) {
+        echo 'Conexão falhou: ' . $e->getMessage();
+        exit;
     }
-    return $conn;
 }
 ?>
