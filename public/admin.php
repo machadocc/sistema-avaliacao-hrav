@@ -2,7 +2,7 @@
 session_start();
 
 // Verificar se o usuário está autenticado
-if (!isset($_SESSION['usuario'])) {
+if (!isset($_SESSION['loggedin']) || !$_SESSION['loggedin']) {
     header('Location: login.php');
     exit();
 }
